@@ -1,0 +1,4 @@
+client 3000
+diretorio 3001
+serverwatcher1 3005 ateh 3010
+server 3101 pra frente

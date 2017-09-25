@@ -1,13 +1,13 @@
+sw = require('./swatchercontroller.js');
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var apiroutes = require('./apiroutes');
 
-
 app.use(bodyParser.json());
 
 app.use(function (req, res, next) {
-  console.log('Received Request, Body:\n',req.body) // populated!
+  //console.log('Received Request, Body:\n',req.body) // populated!
   next()
 });
 
@@ -31,5 +31,5 @@ apiroutes.forEach((elem) => {
 app.use('', express.static('./public'));
 
 app.listen(3001, function () {
-  console.log('Directory app listening on port 3000!');
+  console.log('Directory app listening on port 3001!');
 });

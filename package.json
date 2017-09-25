@@ -15,6 +15,10 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
-    "express": "^4.15.4"
+    "child_process": "^1.0.2",
+    "express": "^4.15.4",
+    "node-schedule": "^1.2.5",
+    "request": "^2.82.0",
+    "request-promise": "^4.2.2"
   }
 }

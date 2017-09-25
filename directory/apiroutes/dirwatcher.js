@@ -1,15 +1,18 @@
 
+
 var gethandler = function (req, res) {
-  res.send('Hello World!');
+  
+  res.send(JSON.stringify({ status: 'hello' }));
 }
 
 
 function getRoutes()
 {
     return [
-        {path:'/',method:'get',handler:gethandler},
+        {path:'/dirwatcher',method:'get',handler:gethandler},
     ];
 }
+
 
 module.exports = {
     getRoutes

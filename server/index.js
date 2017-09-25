@@ -30,8 +30,7 @@ apiroutes.forEach((elem) => {
 
 app.use('', express.static('./public'));
 
-/*
-app.listen(3000, function () {
+
+app.listen(3005, function () {
   console.log('Directory app listening on port 3000!');
 });
-*/
