@@ -1,0 +1,20 @@
+{
+  "name": "ZergWriter",
+  "version": "1.0.0",
+  "description": "A distributed text editor for multiple readers and writers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "node client/index.js",
+    "directory": "node directory/index.js",
+    "dispatcher": "node dispatcher/index.js",
+    "server": "node server/index.js",
+    "startall": "node client/index.js | node directory/index.js | node dispatcher/index.js | node server/index.js"
+  },
+  "author": "Fernando Barbosa, Guilherme Babugia",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.15.4"
+  }
+}
