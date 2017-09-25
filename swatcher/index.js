@@ -1,16 +1,19 @@
+sp = require('./spawnercontroller');
 var schedule = require('node-schedule');
 var rp = require('request-promise');
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var apiroutes = require('./apiroutes');
-const { spawn } = require('child_process');
+
 
 var directoryaddress = 'http://localhost';
 var directoryport = 3001;
 
 var myaddress = 'http://localhost';
 var myport = 3005;
+
+//sp.spawnServers(2, 'http://localhost', 3001);
 
 console.log('Starting Server Watcher!');
 
@@ -75,7 +78,7 @@ var j = schedule.scheduleJob('*/1 * * * *', function(){
 }).on('error', () => {
   console.log('Porta '+ myport + ' esta em uso, usando a proxima!');
   myport++;
-  if (myport>3099)
+  if (myport>3015)
     return;
   startListening();
 });

@@ -13,8 +13,8 @@ function registerServerWatcher(myaddress, myport)
         serverWatchers[myaddress][myport] = {beats:1, myaddress, myport,lastbeat:nowInMs, alive:1};
     }else
     {
-        let beats = oldInfo.beats +1;
-        serverWatchers[myaddress][myport] = {beats, myaddress, myport,lastbeat:nowInMs, alive:1};
+        oldInfo.beats +=1;
+        serverWatchers[myaddress][myport] = oldInfo;
     }
     console.log('W Entry:',serverWatchers[myaddress][myport]);
 }
@@ -44,7 +44,7 @@ function getServerWatchers()
                 watchers.concat(watcher);
         })
     });
-    
+
     return watchers;
 }
 

@@ -1,3 +1,4 @@
+servercontrol = require('./servercontroller.js');
 sw = require('./swatchercontroller.js');
 var express = require('express');
 var app = express();
