@@ -4,12 +4,16 @@ var bodyParser = require('body-parser');
 var apiroutes = require('./apiroutes');
 var schedule = require('node-schedule');
 var rp = require('request-promise');
+var fs = require('fs');
+var ct = require('./controller.js');
 
 var directoryaddress = 'failed';
 var directoryport = '0';
 
 var myaddress = 'http://localhost';
-var myport = 3100;
+myport = 3100;
+db = null;
+waitfordb=false;
 
 process.argv.forEach(function (val, index, array) {
   //console.log(index + ': ' + val);
@@ -30,10 +34,11 @@ if (directoryaddress=='failed' || directoryport=='0')
 
 console.log('Starting Server!');
 
+
 app.use(bodyParser.json());
 
 app.use(function (req, res, next) {
-  console.log('Received Request, Body:\n',req.body) // populated!
+  //console.log('Received Request, Body:\n',req.body) // populated!
   next()
 });
 
@@ -61,27 +66,11 @@ function startListening()
   app.listen(myport, function () {
   console.log('Directory app listening on port '+myport+'!');
 
+  ct.init(directoryaddress,directoryport,myaddress,myport);
+
+  ct.startDB();
   var j = schedule.scheduleJob('*/1 * * * *', function(){
-  console.log('Checking on Directory!');
-
-    var options = {
-      method: 'POST',
-      uri: directoryaddress+':'+directoryport+'/serverbeat',
-      body: {
-          myaddress,
-          myport
-      },
-      json: true // Automatically stringifies the body to JSON
-  };
-
-    rp(options)
-      .then(function (htmlString) {
-          console.log('Directory Succesfully Pinged');
-          console.log(htmlString);
-      })
-      .catch(function (err) {
-          console.log('Unable to Ping Directory, waiting for on more minute...');
-      });
+    ct.heartBeat({myaddress,myport});
   });
 
 }).on('error', () => {

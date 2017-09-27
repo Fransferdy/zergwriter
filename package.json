@@ -9,7 +9,7 @@
     "directory": "node directory/index.js",
     "dispatcher": "node dispatcher/index.js",
     "server": "node server/index.js",
-    "startall": "node client/index.js | node directory/index.js | node dispatcher/index.js | node server/index.js"
+    "startall": "node client/index.js | node dwatcher/index.js | node swatcher/index.js"
   },
   "author": "Fernando Barbosa, Guilherme Babugia",
   "license": "ISC",
@@ -19,6 +19,7 @@
     "express": "^4.15.4",
     "node-schedule": "^1.2.5",
     "request": "^2.82.0",
-    "request-promise": "^4.2.2"
+    "request-promise": "^4.2.2",
+    "sqlite3": "^3.1.12"
   }
 }
