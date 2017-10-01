@@ -1,3 +1,10 @@
+directoryaddress = 'failed';
+directoryport = '0';
+myaddress = 'http://localhost';
+myport = 3100;
+
+dbs = require('./dbservice.js');
+clients = require('./clientcontroller.js');
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -7,11 +14,11 @@ var rp = require('request-promise');
 var fs = require('fs');
 var ct = require('./controller.js');
 
-var directoryaddress = 'failed';
-var directoryport = '0';
 
-var myaddress = 'http://localhost';
-myport = 3100;
+
+
+
+
 db = null;
 waitfordb=false;
 
@@ -44,7 +51,9 @@ app.use(function (req, res, next) {
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.header("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
   next();
 });
 
@@ -64,12 +73,12 @@ app.use('', express.static('./public'));
 function startListening()
 {
   app.listen(myport, function () {
-  console.log('Directory app listening on port '+myport+'!');
+  console.log('Server app listening on port '+myport+'!');
 
   ct.init(directoryaddress,directoryport,myaddress,myport);
 
   ct.startDB();
-  var j = schedule.scheduleJob('*/1 * * * *', function(){
+  var j = schedule.scheduleJob('*/5 * * * * *', function(){
     ct.heartBeat({myaddress,myport});
   });
 

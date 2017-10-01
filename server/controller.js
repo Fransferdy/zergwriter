@@ -1,7 +1,8 @@
 
 var rp = require('request-promise');
 var fs = require('fs');
-var sqlite3 = require('sqlite3').verbose();
+var sqlite3 = require('sqlite3-promise');
+//console.log(sqlite3);
 
 var daddress = '';
 var dport = '';
@@ -32,13 +33,15 @@ function heartBeat()
 
     
     setTimeout(() => { // wait a bit to allow bd to return value
+        clients.cleanClient();
+        let amountClients = clients.getClients().length;
         var options = {
         method: 'POST',
         uri: daddress+':'+dport+'/serverbeat',
         body: {
             myAddress,
             myPort,
-            data: {lastStamp}
+            data: {lastStamp,amountClients}
         },
         json: true // Automatically stringifies the body to JSON
     };
@@ -91,12 +94,10 @@ function startDB()
             { }
       })
       .catch(function (err) {
+          console.log(err);
           console.log('Unable to Ping Directory, waiting for on more minute...');
       });
   }
-
-
-
 }
 
 module.exports = {

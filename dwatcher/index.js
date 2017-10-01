@@ -5,7 +5,7 @@ const { spawn } = require('child_process');
 
 console.log('Starting Directory Watcher!');
 
-var j = schedule.scheduleJob('*/1 * * * *', function(){
+var j = schedule.scheduleJob('*/20 * * * * *', function(){
   console.log('Checking on Directory!');
 
   rp('http://localhost:3001/dirwatcher')

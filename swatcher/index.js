@@ -50,7 +50,7 @@ function startListening()
   console.log('Directory app listening on port '+myport+'!');
 
 
-var j = schedule.scheduleJob('*/1 * * * *', function(){
+var j = schedule.scheduleJob('*/5 * * * * *', function(){
   console.log('Checking on Directory!');
 
     var options = {

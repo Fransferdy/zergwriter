@@ -18,6 +18,23 @@ function base64_encode(file) {
     return new Buffer(bitmap).toString('base64');
 }
 
+var serverKillposthandler = function (req, res) {
+  res.send(JSON.stringify({ status: 'turning myself off...' }));
+  if (db!=null)
+    db.close();
+  process.exit();
+}
+
+var serverGetAllFilesgethandler = async function (req, res) {
+  var result = await dbs.getAllFiles();
+  res.send(JSON.stringify({ status:'ok', files: result }));
+}
+
+var serverGetAllFileDatagethandler = async function (req, res) {
+  var result = await dbs.getAllFileData();
+  res.send(JSON.stringify({ status:'ok', files: result }));
+}
+
 
 var serverDbposthandler = function (req, res) {
   //console.log('Received server heart beat: ',req.body);
@@ -31,7 +48,7 @@ var serverDbposthandler = function (req, res) {
   waitfordb=false;
 }
 
-var serverDbgethandler = function (req, res) { //receive {targetaddress, targetport} sends dbfile
+var  serverDbgethandler =  function (req, res) { //receive {targetaddress, targetport} sends dbfile
     dbFileName = 'db'+myport+'.db';
     if (db==null)
     {
@@ -49,7 +66,7 @@ var serverDbgethandler = function (req, res) { //receive {targetaddress, targetp
     rp(options)
       .then(function (htmlString) {
             let ob = htmlString;
-            console.log(ob.status);
+            //console.log(ob.status);
             res.send(JSON.stringify({ status: 'dbupdate sent to requesting server'}));
       })
       .catch(function (err) {
@@ -58,11 +75,20 @@ var serverDbgethandler = function (req, res) { //receive {targetaddress, targetp
       });    
 }
 
-function getRoutes()
+var  serverGetClientsgethandler =  function (req, res) { //receive {targetaddress, targetport} sends dbfile
+    let myclients = clients.getClients();
+    res.send(JSON.stringify({ clients: myclients}));
+}
+
+ function getRoutes()
 {
     return [
         {path:'/serverdb',method:'get',handler:serverDbgethandler},
-        {path:'/serverdb',method:'post',handler:serverDbposthandler}
+        {path:'/getclients',method:'get',handler:serverGetClientsgethandler},
+        {path:'/servergetallfiles',method:'get',handler:serverGetAllFilesgethandler},
+        {path:'/servergetallfiledata',method:'get',handler:serverGetAllFileDatagethandler},
+        {path:'/serverdb',method:'post',handler:serverDbposthandler},
+        {path:'/serverkill',method:'post',handler:serverKillposthandler}
     ];
 }
 

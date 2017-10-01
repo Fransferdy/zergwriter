@@ -1,7 +1,7 @@
 
 
 var posthandler = function (req, res) {
-  console.log('Receive server watcher heart beat: ',req.body);
+  //console.log('Receive server watcher heart beat: ',req.body);
   res.send(JSON.stringify({ status: 'acknowledged' }));
   sw.registerServerWatcher(req.body.myaddress, req.body.myport);
 }

@@ -7,7 +7,7 @@ var gethandler = function (req, res) {
 function getRoutes()
 {
     return [
-        {path:'/',method:'get',handler:gethandler}
+        {path:'/potato',method:'get',handler:gethandler}
     ];
 }
 
